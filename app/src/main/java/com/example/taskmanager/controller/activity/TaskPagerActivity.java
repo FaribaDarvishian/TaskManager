@@ -14,17 +14,22 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.taskmanager.R;
+import com.example.taskmanager.controller.fragment.AddTaskFragment;
+import com.example.taskmanager.controller.fragment.TaskDetailFragment;
 import com.example.taskmanager.controller.fragment.TaskListFragment;
 import com.example.taskmanager.model.State;
+import com.example.taskmanager.repository.TasksRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class TaskPagerActivity extends AppCompatActivity {
+public class TaskPagerActivity extends AppCompatActivity
+        implements TaskDetailFragment.Callbacks, AddTaskFragment.Callbacks  {
 
     public static final String EXTRA_BUNDLE_USERNAME = "com.example.taskmanager.activity.extraBundleUsername";
     private TaskListFragment mTasksListFragmentDone;
     private TaskListFragment mTasksListFragmentDoing;
     private TaskListFragment mTasksListFragmentTodo;
+    private TasksRepository mTasksRepository;
     private String mUsername;
     private ViewPager2 viewPager;
 
@@ -62,6 +67,22 @@ public class TaskPagerActivity extends AppCompatActivity {
     private void findViews() {
         viewPager = findViewById(R.id.view_pager_fragments);
 
+    }
+
+    @Override
+    public void updateTasksFragment(State taskState, String username) {
+        mTasksRepository = TasksRepository.getInstance();
+        switch (taskState) {
+            case DONE:
+                mTasksListFragmentDone.updateUI();
+                break;
+            case DOING:
+                mTasksListFragmentDoing.updateUI();
+                break;
+            case TODO:
+                mTasksListFragmentTodo.updateUI();
+                break;
+        }
     }
 
     private class TaskPagerAdapter extends FragmentStateAdapter {

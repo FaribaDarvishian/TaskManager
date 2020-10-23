@@ -1,6 +1,5 @@
 package com.example.taskmanager.controller.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -24,7 +23,6 @@ import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -37,6 +35,7 @@ public class TaskListFragment extends Fragment {
 
     public static final String ARGS_STATE = "argsState";
     public static final String ARGS_USERNAME = "argsUsername";
+    private static final String ADD_TASK_FRAGMENT_DIALOG_TAG = "com.example.taskmanager.controller.fragment.";
 
     private State mState;
     private String mUsername;
@@ -137,10 +136,12 @@ public class TaskListFragment extends Fragment {
     }
 
     private void setListeners() {
-mFloatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
+    mFloatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-
+        AddTaskFragment addTaskFragment = AddTaskFragment.newInstance(mUsername);
+        addTaskFragment.show(getActivity().getSupportFragmentManager(), ADD_TASK_FRAGMENT_DIALOG_TAG);
+        updateUI();
     }
 });
     }
