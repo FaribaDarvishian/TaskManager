@@ -156,7 +156,9 @@ public class TaskDetailFragment extends DialogFragment {
         mButtonDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //ToDo DatePikerFragment
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getTaskDate());
+                datePickerFragment.setTargetFragment(TaskDetailFragment.this, REQUEST_CODE_DATE_PICKER);
+                datePickerFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
             }
         });
         mButtonSave.setOnClickListener(new View.OnClickListener() {
@@ -214,7 +216,12 @@ public class TaskDetailFragment extends DialogFragment {
 
         if (requestCode == REQUEST_CODE_DATE_PICKER) {
             //get response from intent extra, which is user selected date
-           //ToDo
+            Date userSelectedDate = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_USER_SELECTED_DATE);
+
+            mTask.setTaskDate(userSelectedDate);
+            mButtonDate.setText(mTask.getTaskDate().toString());
+
+            updateTask();
         }
 
     }

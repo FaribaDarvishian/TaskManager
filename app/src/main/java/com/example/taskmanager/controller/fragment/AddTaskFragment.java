@@ -99,7 +99,9 @@ public class AddTaskFragment extends DialogFragment {
         mButtonDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               //ToDo DatePikerFragment
+                DatePickerFragment datePickerFragment = DatePickerFragment.newInstance(mTask.getTaskDate());
+                datePickerFragment.setTargetFragment(AddTaskFragment.this, REQUEST_CODE_DATE_PICKER);
+                datePickerFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
             }
         });
         mButtonSave.setOnClickListener(new View.OnClickListener() {
