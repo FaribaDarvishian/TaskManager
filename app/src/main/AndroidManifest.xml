@@ -10,14 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".controller.activity.TaskPagerActivity"></activity>
-        <activity android:name=".controller.activity.SignUpActivity" />
-        <activity android:name=".controller.activity.LoginActivity">
+        <activity android:name=".controller.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

@@ -3,20 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:label="Task Manager"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:label="Task Manager"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
     android:paddingRight="16dp"
-    android:paddingBottom="16dp"
-    >
+    android:paddingBottom="16dp">
+
+
 
     <EditText
         android:id="@+id/log_in_edit_text_username"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="280dp"
         android:layout_marginEnd="24dp"
         android:hint="username"
         android:inputType="textEmailAddress"
@@ -39,7 +41,7 @@
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/log_in_edit_text_username" />
 
     <Button
         android:id="@+id/button_login"
@@ -50,7 +52,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="64dp"
-        android:background="#26ACE8"
+        android:background="#D7B5E8"
         android:enabled="true"
         android:text="Log in"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,8 +63,8 @@
 
     <Button
         android:id="@+id/button_sign_in"
-        android:layout_width="69dp"
-        android:layout_height="36dp"
+        android:layout_width="118dp"
+        android:layout_height="41dp"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
@@ -70,15 +72,15 @@
         android:layout_marginBottom="64dp"
         android:background="#00FFFFFF"
         android:enabled="true"
-        android:text="Sign in"
-        android:textColor="#3C9CE8"
-        android:textSize="12dp"
+        android:text="SignUp"
+        android:textColor="#AA00FF"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.358"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/log_in_edit_text_password"
-        app:layout_constraintVertical_bias="0.42000002" />
+        app:layout_constraintVertical_bias="0.587" />
 
     <ProgressBar
         android:id="@+id/loading"
@@ -91,6 +93,7 @@
         android:layout_marginBottom="64dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sign_in_edit_text_password"
         app:layout_constraintStart_toStartOf="@+id/log_in_edit_text_password"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.3" />
@@ -102,7 +105,8 @@
         android:layout_gravity="start"
         android:layout_marginBottom="45dp"
         android:text="No account?"
-        android:textSize="12dp"
+        android:textColor="#D50000"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.136"
@@ -111,83 +115,3 @@
         app:layout_constraintVertical_bias="0.093"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".controller.fragment.LoginFragment">-->
-
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_margin="15dp"-->
-<!--        android:padding="5dp"-->
-<!--        app:cardCornerRadius="4dp"-->
-<!--        app:cardElevation="5dp">-->
-
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center_horizontal|top"-->
-<!--            android:layout_margin="16dp"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/username_login_form"-->
-<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="@string/hint_username"-->
-<!--                app:counterEnabled="true"-->
-<!--                app:counterMaxLength="12"-->
-<!--                app:errorEnabled="true"-->
-<!--                app:helperText="*Required">-->
-
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/username_login"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:inputType="text" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--            <com.google.android.material.textfield.TextInputLayout-->
-<!--                android:id="@+id/password_login_form"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                app:passwordToggleEnabled="true">-->
-
-<!--                <com.google.android.material.textfield.TextInputEditText-->
-<!--                    android:id="@+id/password_login"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content" />-->
-<!--            </com.google.android.material.textfield.TextInputLayout>-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btn_login"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:layout_marginTop="16dp"-->
-<!--                android:text="@string/Login"-->
-<!--                android:textColor="@android:color/black"-->
-<!--                android:textStyle="bold" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btn_signup"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:text="@string/signup"-->
-<!--                android:textColor="@android:color/black"-->
-<!--                android:textSize="12sp" />-->
-
-<!--        </LinearLayout>-->
-<!--    </androidx.cardview.widget.CardView>-->
-
-<!--</LinearLayout>-->

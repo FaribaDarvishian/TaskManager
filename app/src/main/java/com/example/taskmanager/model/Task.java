@@ -4,68 +4,80 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Task {
-    private UUID mIdTask;
-    private String mTitleTask;
-    private String mDescription;
-    private State mStateTask;
-    private UUID mIdUser;
-    private Date mDateTask;
+    private UUID mId;
+    private String mTaskTitle;
+    private State mTaskState;
+    private String mTaskDescription;
+    private Date mTaskDate;
+    private String mUsername;
 
-
-
-    public Task(String title, State stateTask, String description, User  user) {
-        mIdTask = UUID.randomUUID();
-        mIdUser = user.getIDUser();
-        mTitleTask = title;
-        mStateTask = stateTask;
-        mDescription = description;
+    public UUID getId() {
+        return mId;
     }
 
-    public State getStateTask() {
-        return mStateTask;
+    public String getUsername() {
+        return mUsername;
     }
 
-    public void setStateTask(State stateTask) {
-        mStateTask = stateTask;
+    public void setUser(String mUser) {
+        this.mUsername = mUser;
     }
 
-    public Date getDateTask() {
-        return mDateTask;
+
+    public String getTaskDescription() {
+        return mTaskDescription;
     }
 
-    public void setDateTask(Date dateTask) {
-        mDateTask = dateTask;
+    public void setTaskDescription(String mTaskDescription) {
+        this.mTaskDescription = mTaskDescription;
     }
 
-    public String getDescription() {
-        return mDescription;
+    public Date getTaskDate() {
+        return mTaskDate;
     }
 
-    public void setDescription(String description) {
-        mDescription = description;
+    public void setTaskDate(Date mTaskDate) {
+        this.mTaskDate = mTaskDate;
     }
 
-    public UUID getIdUser() {
-        return mIdUser;
+    public String getTaskTitle() {
+        return mTaskTitle;
     }
 
-    public void setIdUser(UUID idUser) {
-        mIdUser = idUser;
+    public void setTaskTitle(String taskName) {
+        mTaskTitle = taskName;
     }
 
-    public UUID getIdTask() {
-        return mIdTask;
+    public State getTaskState() {
+        return mTaskState;
     }
 
-    public void setIdTask(UUID idTask) {
-        mIdTask = idTask;
+    public void setTaskState(State taskState) {
+        mTaskState = taskState;
     }
 
-    public String getTitleTask() {
-        return mTitleTask;
+    public Task(String mTaskTitle, State mTaskState, String mTaskDescription, Date mTaskDate, String mUsername) {
+        this.mId = UUID.randomUUID();
+        this.mTaskTitle = mTaskTitle;
+        this.mTaskState = mTaskState;
+        this.mTaskDescription = mTaskDescription;
+        this.mTaskDate = mTaskDate;
+        this.mUsername = mUsername;
     }
 
-    public void setTitleTask(String titleTask) {
-        mTitleTask = titleTask;
+    public Task(UUID id) {
+        mId = id;
+        mTaskDate = new Date();
+
+
+    }
+
+    public Task(String username) {
+        this(UUID.randomUUID());
+        this.mUsername = username;
+    }
+    public Task(){
+        this(UUID.randomUUID());
+
     }
 }

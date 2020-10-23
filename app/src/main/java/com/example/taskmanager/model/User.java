@@ -1,39 +1,66 @@
 package com.example.taskmanager.model;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class User {
-    private String mUsername;
-    private String mPassword;
-    private UUID mIDUser;
+    private String username;
+    private String password;
+    private UserType userType;
+    private int numberOfTasks = 0;
 
 
-    public User() {
-        mIDUser = UUID.randomUUID();
+    private Date userDateCreated;
+
+    public User(String username, String password, UserType userType) {
+        this.username = username;
+        this.password = password;
+        this.userType = userType;
+        this.userDateCreated = new Date();
+
     }
 
+    public int getNumberOfTasks() {
+        return numberOfTasks;
+    }
+
+    public void setNumberOfTasks(int numberOfTasks) {
+        this.numberOfTasks = numberOfTasks;
+    }
+
+    public User(){
+        this.userDateCreated = new Date();
+
+    }
+    public Date getUserDateCreated() {
+        return userDateCreated;
+    }
+
+    public void setUserDateCreated(Date mUserDateCreated) {
+        this.userDateCreated = mUserDateCreated;
+    }
     public String getUsername() {
-        return mUsername;
+        return username;
     }
 
     public void setUsername(String username) {
-        mUsername = username;
+        this.username = username;
     }
 
     public String getPassword() {
-        return mPassword;
+        return password;
     }
 
     public void setPassword(String password) {
-        mPassword = password;
+        this.password = password;
     }
 
-    public UUID getIDUser() {
-        return mIDUser;
+    public UserType getUserType() {
+        return userType;
     }
 
-    public void setIDUser(UUID IDUser) {
-        mIDUser = IDUser;
+    public void setUserType(UserType userType) {
+        this.userType = userType;
     }
 
 }

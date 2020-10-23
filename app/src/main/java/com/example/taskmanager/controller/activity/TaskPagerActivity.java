@@ -1,22 +1,17 @@
 package com.example.taskmanager.controller.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 
-import com.example.taskmanager.R;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class TaskPagerActivity extends AppCompatActivity {
-
-    public static Intent newIntent(Context context){
+    public static final String EXTRA_BUNDLE_USERNAME = "com.example.taskmanager.activity.extraBundleUsername";
+    public static Intent newIntent(Context context, String username) {
         Intent intent = new Intent(context, TaskPagerActivity.class);
+        intent.putExtra(EXTRA_BUNDLE_USERNAME, username);
         return intent;
     }
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_pager);
-    }
+
 }
