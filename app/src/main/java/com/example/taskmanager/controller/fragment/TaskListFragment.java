@@ -1,5 +1,6 @@
 package com.example.taskmanager.controller.fragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -36,6 +38,10 @@ public class TaskListFragment extends Fragment {
     public static final String ARGS_STATE = "argsState";
     public static final String ARGS_USERNAME = "argsUsername";
     private static final String ADD_TASK_FRAGMENT_DIALOG_TAG = "com.example.taskmanager.controller.fragment.";
+    private static final String ARG_TASK_STATE = "ArgTaskState";
+    public static final String TASK_DETAIL_FRAGMENT_DIALOG_TAG = "TaskDetailFragmentDialogTag";
+    public static final int TASK_DETAIL_REQUEST_CODE = 101;
+
 
     private State mState;
     private String mUsername;
@@ -165,18 +171,27 @@ public class TaskListFragment extends Fragment {
             mImageViewDeleteTask = itemView.findViewById(R.id.image_view_delete_task);
 
             itemView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
+                    TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance(mTask.getId());
+                    taskDetailFragment.setTargetFragment(TaskListFragment.this, TASK_DETAIL_REQUEST_CODE);
+                    taskDetailFragment.show(getFragmentManager(), TASK_DETAIL_FRAGMENT_DIALOG_TAG);
 
-//TODO
 
                 }
             });
             mImageViewShareTask.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent sendIntent = new Intent(Intent.ACTION_SEND);
+                    sendIntent.putExtra(Intent.EXTRA_TEXT, getReportText());
+                    sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Task Report");
+                    sendIntent.setType("text/plain");
 
-//TODO
+                    Intent shareIntent = Intent.createChooser(sendIntent, null);
+                    if (sendIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                        startActivity(shareIntent);
 
                 }
             });
@@ -189,7 +204,6 @@ public class TaskListFragment extends Fragment {
             });
         }
 
-        //TODO
 
 
         public void bindTask(Task task) {
@@ -202,6 +216,25 @@ public class TaskListFragment extends Fragment {
             mTextViewTaskTittle.setText(task.getTaskTitle());
             mTextViewTaskState.setText(task.getTaskState().toString());
             mTextViewTaskDate.setText(task.getTaskDate().toString());
+        }
+        private String getReportText() {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            String dateString = simpleDateFormat.format(mTask.getTaskDate()) ;
+            String titleString = mTask.getTaskTitle() == null ?
+                    "there is no Title" :
+                    "Task Title: " + mTask.getTaskTitle();
+            String descriptionString = mTask.getTaskDescription() == null ?
+                    " there is no description" :
+                    " Task description: " + mTask.getTaskTitle();
+
+            String report = ("Task Report:"+
+                    titleString+
+                    descriptionString+
+                    "task state: "+mTask.getTaskDescription()+
+                    dateString
+            );
+
+            return report;
         }
     }
 
