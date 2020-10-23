@@ -21,6 +21,7 @@ import com.example.taskmanager.R;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.model.Task;
 import com.example.taskmanager.repository.TasksRepository;
+import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -44,7 +45,8 @@ public class TaskListFragment extends Fragment {
     private LinearLayout mLinearLayout1;
     private LinearLayout mLinearLayout2;
     private TasksRepository mTasksRepository;
-
+    private UserRepository mUserRepository;
+    private TaskAdapter mAdapter;
     public TaskListFragment() {
         // Required empty public constructor
     }
@@ -66,6 +68,7 @@ public class TaskListFragment extends Fragment {
             mState = (State) getArguments().getSerializable(ARGS_STATE);
             mUsername = getArguments().getString(ARGS_USERNAME);
         }
+        mTasksRepository=TasksRepository.getInstance();
     }
 
     @Override
@@ -85,8 +88,46 @@ public class TaskListFragment extends Fragment {
                 mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
                 break;
         }
+
+        updateUI();
         return view;
     }
+
+    public void updateUI() {
+
+        List<Task> tasks;
+        mUserRepository = UserRepository.getInstance();
+        if (mUserRepository.getUserType(mUsername) != null) {
+            switch (mUserRepository.getUserType(mUsername)) {
+                case USER:
+                    tasks = mTasksRepository.getList(mState, mUsername);
+                    adapter(tasks);
+                    break;
+                case ADMIN:
+                    tasks = mTasksRepository.getList(mState);
+                    adapter(tasks);
+            }
+        }
+    }
+
+    private void adapter(List<Task> tasks) {
+        if (mAdapter == null) {
+            mAdapter = new TaskAdapter(tasks);
+            mRecyclerView.setAdapter(mAdapter);
+        } else {
+            mAdapter.setTasks(tasks);
+            mAdapter.notifyDataSetChanged();
+
+        }
+        if (tasks.size() == 0) {
+            mLinearLayout1.setVisibility(View.GONE);
+            mLinearLayout2.setVisibility(View.VISIBLE);
+        } else if (mTasksRepository.getList().size() != 0) {
+            mLinearLayout1.setVisibility(View.VISIBLE);
+            mLinearLayout2.setVisibility(View.GONE);
+        }
+    }
+
 
     private void findViews(View view) {
         mRecyclerView = view.findViewById(R.id.recycler_view_tasks);
@@ -96,7 +137,12 @@ public class TaskListFragment extends Fragment {
     }
 
     private void setListeners() {
+mFloatingActionButtonAdd.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
 
+    }
+});
     }
 
     private class TaskHolder extends RecyclerView.ViewHolder {
@@ -157,6 +203,7 @@ public class TaskListFragment extends Fragment {
             mTextViewTaskDate.setText(task.getTaskDate().toString());
         }
     }
+
     private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
 
         private List<Task> mTasks;
