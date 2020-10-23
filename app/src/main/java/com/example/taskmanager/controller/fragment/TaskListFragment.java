@@ -3,13 +3,18 @@ package com.example.taskmanager.controller.fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.taskmanager.R;
 import com.example.taskmanager.model.State;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,23 +23,27 @@ import com.example.taskmanager.model.State;
  */
 public class TaskListFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    public static final String ARGS_STATE = "argsState";
+    public static final String ARGS_USERNAME = "argsUsername";
+
+    private State mState;
+    private String mUsername;
+    private RecyclerView mRecyclerView;
+    private FloatingActionButton mFloatingActionButtonAdd;
+    private LinearLayout mLinearLayout1;
+    private LinearLayout mLinearLayout2;
 
     public TaskListFragment() {
         // Required empty public constructor
     }
 
 
-    public static TaskListFragment newInstance(State state,String param1) {
+    public static TaskListFragment newInstance(State state, String username) {
         TaskListFragment fragment = new TaskListFragment();
         Bundle args = new Bundle();
+        args.putSerializable(ARGS_STATE, state);
+        args.putString(ARGS_USERNAME, username);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,8 +52,8 @@ public class TaskListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mState = (State) getArguments().getSerializable(ARGS_STATE);
+            mUsername = getArguments().getString(ARGS_USERNAME);
         }
     }
 
@@ -52,6 +61,30 @@ public class TaskListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+        findViews(view);
+        setListeners();
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        switch (getResources().getConfiguration().orientation) {
+            case 1:
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                break;
+            case 2:
+                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+                break;
+        }
+        return view;
     }
+
+    private void findViews(View view) {
+        mRecyclerView = view.findViewById(R.id.recycler_view_tasks);
+        mLinearLayout2 = view.findViewById(R.id.layout2);
+        mLinearLayout1 = view.findViewById(R.id.layout1);
+        mFloatingActionButtonAdd = view.findViewById(R.id.floating_action_button_add);
+    }
+    private void setListeners(){
+
+    }
+
 }
