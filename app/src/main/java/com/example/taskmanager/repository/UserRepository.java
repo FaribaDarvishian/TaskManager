@@ -21,7 +21,7 @@ public class UserRepository {
     private UserRepository() {
 
         mUsers = new ArrayList<>();
-        mUsers.add(new User("admin", "admin", UserType.ADMIN));
+        mUsers.add(new User("a", "1", UserType.ADMIN));
         for (int i = 1; i < mNumberOfUsers; i++) {
             User user = new User();
             mUsers.add(user);
