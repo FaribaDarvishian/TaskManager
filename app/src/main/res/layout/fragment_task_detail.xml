@@ -105,6 +105,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
+                android:background="#D7B5E8"
                 android:hint="date"
                 android:textSize="15dp" />
 
@@ -122,14 +123,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="50dp"
-                android:background="#00FFFFFF"
-                android:text="DISCARD" />
+                android:background="#D7B5E8"
+                android:text="CANCEL" />
 
             <Button
                 android:id="@+id/button_save"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
-                android:background="#00FFFFFF"
+                android:background="#D7B5E8"
                 android:text="Save" />
         </LinearLayout>
 

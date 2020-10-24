@@ -6,7 +6,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -155,8 +154,9 @@ public class TaskListFragment extends Fragment {
     private class TaskHolder extends RecyclerView.ViewHolder {
 
         private TextView mTextViewTaskTittle;
-        private TextView mTextViewTaskState;
+        private TextView mTextViewTaskCandid;
         private TextView mTextViewTaskDate;
+        private TextView mTextViewCandid;
         private ImageView mImageViewShareTask;
         private ImageView mImageViewDeleteTask;
 
@@ -165,7 +165,7 @@ public class TaskListFragment extends Fragment {
         public TaskHolder(@NonNull View itemView) {
             super(itemView);
             mTextViewTaskTittle = itemView.findViewById(R.id.list_row_task_title);
-            mTextViewTaskState = itemView.findViewById(R.id.list_row_Task_state);
+            mTextViewTaskCandid = itemView.findViewById(R.id.list_row_Task_candid);
             mTextViewTaskDate = itemView.findViewById(R.id.text_view_task_date);
             mImageViewShareTask = itemView.findViewById(R.id.image_view_share);
             mImageViewDeleteTask = itemView.findViewById(R.id.image_view_delete_task);
@@ -214,7 +214,8 @@ public class TaskListFragment extends Fragment {
                 itemView.setBackgroundColor(Color.WHITE);
 
             mTextViewTaskTittle.setText(task.getTaskTitle());
-            mTextViewTaskState.setText(task.getTaskState().toString());
+            String CandidTitle = String.valueOf(task.getTaskTitle().charAt(0));
+            mTextViewTaskCandid.setText(CandidTitle);
             mTextViewTaskDate.setText(task.getTaskDate().toString());
         }
         private String getReportText() {

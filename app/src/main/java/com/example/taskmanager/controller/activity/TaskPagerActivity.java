@@ -110,10 +110,8 @@ public class TaskPagerActivity extends AppCompatActivity
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-//                    return TasksFragment.newInstance(TaskState.DONE, mUsername);
                     return mTasksListFragmentDone;
                 case 1:
-//                    return TasksFragment.newInstance(TaskState.DOING, mUsername);
                     return mTasksListFragmentDoing;
                 case 2:
                     return mTasksListFragmentTodo;

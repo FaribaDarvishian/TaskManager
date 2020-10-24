@@ -10,15 +10,16 @@
 
 
     <TextView
-        android:id="@+id/list_row_Task_state"
+        android:id="@+id/list_row_Task_candid"
         android:layout_width="64dp"
         android:layout_height="62dp"
         android:layout_marginRight="10dp"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
+        android:background="@drawable/circular_textview"
         android:gravity="center"
-        android:textColor="#E6E0E0"
-        android:textSize="16dp"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="24sp"
         tools:text="tag" />
 
     <LinearLayout
