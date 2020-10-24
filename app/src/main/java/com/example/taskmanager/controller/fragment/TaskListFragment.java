@@ -85,14 +85,14 @@ public class TaskListFragment extends Fragment {
         setListeners();
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        switch (getResources().getConfiguration().orientation) {
-            case 1:
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                break;
-            case 2:
-                mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-                break;
-        }
+//        switch (getResources().getConfiguration().orientation) {
+//            case 1:
+//                mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//                break;
+//            case 2:
+//              //  mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+//                break;
+//        }
 
         updateUI();
         return view;

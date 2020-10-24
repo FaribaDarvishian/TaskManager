@@ -27,28 +27,12 @@ public class TasksRepository implements Serializable {
         mTasks = new ArrayList<>();
         for (int i = 0; i < mNumberOfTasks; i++) {
             Task task = new Task();
-//            task.setTaskTitle("Task : " + (i + 1));
-//            task.setTaskState(randomTaskState());
             mTasks.add(task);
         }
     }
 
     public List<Task> getList() {
         return mTasks;
-    }
-
-    private State randomTaskState() {
-        Random random = new Random();
-        int rand = random.nextInt(3);
-        switch (rand) {
-            case 0:
-                return State.DONE;
-            case 1:
-                return State.DOING;
-            case 2:
-                return State.TODO;
-        }
-        return null;
     }
 
     public List<Task> getList(State taskState) {
@@ -69,16 +53,9 @@ public class TasksRepository implements Serializable {
         return taskList;
     }
 
-    public void addTask() {
-        Task task = new Task();
-        task.setTaskTitle("Task : " + (sTasksRepository.getList().size() + 1));
-//        task.setTaskState(randomTaskState());
-        mTasks.add(task);
-    }
 
     public void addTask(Task task) {
-//        task.setTaskTitle("Task : " + (sTasksRepository.getList().size()+1));
-//        task.setTaskDescription("new");
+
         mTasks.add(task);
     }
 
@@ -87,7 +64,8 @@ public class TasksRepository implements Serializable {
     }
 
     public void clearTaskRepository() {
-        sTasksRepository = null;
+        sTasksRepository = new TasksRepository();
+
     }
 
     public void deleteUserTask(String username){
