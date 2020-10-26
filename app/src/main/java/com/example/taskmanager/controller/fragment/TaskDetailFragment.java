@@ -18,6 +18,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.example.taskmanager.R;
+import com.example.taskmanager.repository.IRepository;
+import com.example.taskmanager.repository.TaskDBRepository;
 import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.model.Task;
@@ -37,7 +39,8 @@ public class TaskDetailFragment extends DialogFragment {
     public static final int REQUEST_CODE_DATE_PICKER = 0;
     public static final String BUNDLE_TASK_ID = "bundleTaskId";
 
-    private TasksRepository mTasksRepository;
+   // private TasksRepository mTasksRepository;
+   private IRepository mTasksRepository;
     private Task mTask;
 
     private EditText mEditTextTaskTitle;
@@ -54,15 +57,20 @@ public class TaskDetailFragment extends DialogFragment {
     public TaskDetailFragment() {
         // Required empty public constructor
     }
-
-
-    public static TaskDetailFragment newInstance(UUID taskId) {
+    public static TaskDetailFragment newInstance() {
         TaskDetailFragment fragment = new TaskDetailFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_TASK_ID, taskId);
         fragment.setArguments(args);
         return fragment;
     }
+
+//    public static TaskDetailFragment newInstance(UUID taskId) {
+//        TaskDetailFragment fragment = new TaskDetailFragment();
+//        Bundle args = new Bundle();
+//        args.putSerializable(ARG_TASK_ID, taskId);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,7 +81,8 @@ public class TaskDetailFragment extends DialogFragment {
         }else{
             mTaskId = (UUID) getArguments().getSerializable(ARG_TASK_ID);
         }
-        mTasksRepository = TasksRepository.getInstance();
+     //   mTasksRepository = TasksRepository.getInstance();
+        mTasksRepository = TaskDBRepository.getInstance(getActivity());
         mTask = (Task) mTasksRepository.get(mTaskId);
 
     }

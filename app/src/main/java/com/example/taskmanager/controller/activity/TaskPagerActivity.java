@@ -24,6 +24,7 @@ import com.example.taskmanager.controller.fragment.AddTaskFragment;
 import com.example.taskmanager.controller.fragment.TaskDetailFragment;
 import com.example.taskmanager.controller.fragment.TaskListFragment;
 import com.example.taskmanager.model.State;
+import com.example.taskmanager.repository.TaskDBRepository;
 import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.tabs.TabLayout;
@@ -36,7 +37,7 @@ public class TaskPagerActivity extends AppCompatActivity
     private TaskListFragment mTasksListFragmentDone;
     private TaskListFragment mTasksListFragmentDoing;
     private TaskListFragment mTasksListFragmentTodo;
-    private TasksRepository mTasksRepository;
+    private TaskDBRepository mTasksRepository;
     private UserRepository mUserRepository;
     private String mUsername;
     private ViewPager2 viewPager;
@@ -60,7 +61,8 @@ public class TaskPagerActivity extends AppCompatActivity
         mTasksListFragmentDoing = TaskListFragment.newInstance(State.DOING, mUsername);
         mTasksListFragmentTodo = TaskListFragment.newInstance(State.TODO, mUsername);
         mUserRepository = UserRepository.getInstance();
-        mTasksRepository = TasksRepository.getInstance();
+       // mTasksRepository = TasksRepository.getInstance();
+        mTasksRepository = TaskDBRepository.getInstance(this);
         findViews();
         pagerAdapter = new TaskPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
@@ -80,7 +82,8 @@ public class TaskPagerActivity extends AppCompatActivity
 
     @Override
     public void updateTasksFragment(State taskState, String username) {
-        mTasksRepository = TasksRepository.getInstance();
+       // mTasksRepository = TasksRepository.getInstance();
+        mTasksRepository = TaskDBRepository.getInstance(this);
         switch (taskState) {
             case DONE:
                 mTasksListFragmentDone.updateUI();

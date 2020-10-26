@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.example.taskmanager.R;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.model.Task;
+import com.example.taskmanager.repository.IRepository;
+import com.example.taskmanager.repository.TaskDBRepository;
 import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -48,7 +50,8 @@ public class TaskListFragment extends Fragment {
     private FloatingActionButton mFloatingActionButtonAdd;
     private LinearLayout mLinearLayout1;
     private LinearLayout mLinearLayout2;
-    private TasksRepository mTasksRepository;
+  //  private TasksRepository mTasksRepository;
+  private IRepository mTasksRepository;
     private UserRepository mUserRepository;
     private TaskAdapter mAdapter;
     public TaskListFragment() {
@@ -72,7 +75,8 @@ public class TaskListFragment extends Fragment {
             mState = (State) getArguments().getSerializable(ARGS_STATE);
             mUsername = getArguments().getString(ARGS_USERNAME);
         }
-        mTasksRepository=TasksRepository.getInstance();
+       // mTasksRepository=TasksRepository.getInstance();
+        mTasksRepository = TaskDBRepository.getInstance(getActivity());
     }
 
     @Override
@@ -174,6 +178,7 @@ public class TaskListFragment extends Fragment {
 
                 @Override
                 public void onClick(View v) {
+
                     TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance(mTask.getId());
                     taskDetailFragment.setTargetFragment(TaskListFragment.this, TASK_DETAIL_REQUEST_CODE);
                     taskDetailFragment.show(getFragmentManager(), TASK_DETAIL_FRAGMENT_DIALOG_TAG);

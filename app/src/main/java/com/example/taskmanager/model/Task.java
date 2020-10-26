@@ -10,6 +10,14 @@ public class Task {
     private String mTaskDescription;
     private Date mTaskDate;
     private String mUsername;
+    public Task(UUID uuid, String title, String description, Date taskDate, String username, State taskState) {
+        this.mId = uuid;
+        this.mTaskTitle = title;
+        this.mTaskState = taskState;
+        this.mTaskDescription = description;
+        this.mTaskDate = taskDate;
+        this.mUsername = username;
+    }
 
     public UUID getId() {
         return mId;
