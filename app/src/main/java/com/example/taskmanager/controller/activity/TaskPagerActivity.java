@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -41,6 +42,7 @@ public class TaskPagerActivity extends AppCompatActivity
     private UserRepository mUserRepository;
     private String mUsername;
     private ViewPager2 viewPager;
+    private TaskListFragment.TaskAdapter mTaskAdapter;
 
     String[] titles = {"Done", "Doing", "Todo"};
     private FragmentStateAdapter pagerAdapter;
@@ -144,6 +146,21 @@ public class TaskPagerActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_item_search:
+                MenuItem itemSearch = findViewById(R.id.menu_item_search);
+                SearchView searchView = (SearchView) itemSearch.getActionView();
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+                        mTaskAdapter.getFilter().filter(newText);
+                        return false;
+                    }
+                });
 
             case R.id.menu_item_clear_tasks:
 

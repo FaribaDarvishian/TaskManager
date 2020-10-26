@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,6 +27,8 @@ import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -244,7 +247,7 @@ public class TaskListFragment extends Fragment {
         }
     }
 
-    private class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
+    public class TaskAdapter extends RecyclerView.Adapter<TaskHolder> {
 
         private List<Task> mTasks;
 
@@ -268,6 +271,34 @@ public class TaskListFragment extends Fragment {
             return taskHolder;
         }
 
+//        @Override
+        public Filter getFilter() {
+            return filter;
+        }
+
+        Filter filter = new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                List<Task> mTasksFilter = new ArrayList<>();
+                if (constraint.toString().isEmpty()) {
+                    mTasksFilter.addAll(mTasks);
+                } else {
+                    for (Task task : mTasks) {
+                        if (task.getTaskTitle().contains(constraint.toString().toLowerCase()) ||
+                                task.getTaskDescription().contains(constraint.toString().toLowerCase()))
+                            mTasksFilter.add(task);
+                    }
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mTasksFilter;
+                return filterResults;
+            }
+
+
+        };
+
+
         @Override
         public void onBindViewHolder(@NonNull TaskHolder holder, int position) {
             Task task = mTasks.get(position);
@@ -278,5 +309,7 @@ public class TaskListFragment extends Fragment {
         public int getItemCount() {
             return mTasks.size();
         }
+
+
     }
 }
