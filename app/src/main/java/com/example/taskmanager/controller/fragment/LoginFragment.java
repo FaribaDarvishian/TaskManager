@@ -16,13 +16,9 @@ import androidx.fragment.app.Fragment;
 import com.example.taskmanager.R;
 import com.example.taskmanager.controller.activity.TaskPagerActivity;
 import com.example.taskmanager.repository.UserDBRepository;
+import com.example.taskmanager.repository.UserDBRoomRepository;
 import com.example.taskmanager.repository.UserRepository;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends Fragment {
 
     private EditText mEditTextUsername;
@@ -31,6 +27,7 @@ public class LoginFragment extends Fragment {
     private Button mButtonSignIn;
     private Callbacks mCallbacks;
     private UserDBRepository mUserRepository;
+    private UserDBRoomRepository mUserDBRoomRepository;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -83,11 +80,13 @@ public class LoginFragment extends Fragment {
                 String password = mEditTextPassword.getText().toString();
                 if (username.equals("") | password.equals("")) {
                     Toast.makeText(getActivity(), "please Username and Password.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Intent intent = TaskPagerActivity.newIntent(getContext(),username);
+                }
+                else {
 
-                    if(mUserRepository.checkUserExist(username,password))
-                    startActivity(intent);
+                    Long userId = UserDBRoomRepository.checkUserExist(mUserDBRoomRepository,username,password);
+                    Intent intent = TaskPagerActivity.newIntent(getContext(),userId);
+                    if(userId!=null)
+                        startActivity(intent);
                     else
                         Toast.makeText(getActivity(), "your username or password is wrong", Toast.LENGTH_SHORT).show();
                 }

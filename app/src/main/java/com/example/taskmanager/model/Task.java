@@ -132,6 +132,9 @@ import java.util.UUID;
                 return null;
             }
         }
+        public String getPhotoFileName() {
+            return "IMG_" + getTaskId() + ".jpg";
+        }
 
         @Override
         public String toString() {

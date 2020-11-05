@@ -1,48 +1,9 @@
 <resources>
-    <string name="app_name">TaskManager</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hint_username">UserName</string>
-    <string name="text_login">Login</string>
-    <string name="text_sing_up">Sign Up</string>
-    <string name="userText"></string>
-    <string name="passwordText"></string>
-    <string name="userTextSignUp"></string>
-    <string name="passwordSignUp"></string>
-    <string name="empty"></string>
-    <string name="successful_message">LogIn was successful</string>
-    <string name="non_successful_message">user or password is incorrect</string>
-    <string name="message_signup">Please username and password</string>
-    <string name="message_not_sign_up">you not sign up</string>
-    <string name="message_find_false">you can not input and password correct</string>
-    <string name="hint_title">Title</string>
-    <string name="hint_description">Description</string>
-    <string name="text_date">Select Date</string>
-    <string name="text_time">Select Time</string>
-    <string name="text_done">Done</string>
-    <string name="text_doing">Doing</string>
-    <string name="text_todo">ToDo</string>
-    <string name="save">Save</string>
-    <string name="delete">Delete</string>
-    <string name="title_dialog_create">Create Task</string>
-    <string name="title_dialog_edit">Edit Task</string>
-    <string name="btn_edit_test">Edit</string>
-    <string name="delete_all_tasks">Delete All Tasks</string>
-    <string name="show_all_users">Show All Users</string>
-    <string name="log_out">Logout</string>
-    <string name="delete_tasks">Are You Sure to Delete All Your Tasks?</string>
-    <string name="registration_date">Registration Date is %s</string>
-    <string name="number_tasks">Number of Tasks is %s</string>
-    <string name="task_manager">Task Manager</string>
-    <string name="log_in">Log in</string>
-    <string name="no_account">No account?</string>
-    <string name="password">password</string>
-    <string name="username">username</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="todo">TODO</string>
+    <string name="app_name">TaskManagerHW13</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
     <string name="delete_question">Are you sure to delete All Tasks?</string>
-    <string name="ok">OK</string>
-    <string name="cancel">CANCEL</string>
-
+    <string name="add_soon">this Feature will be add soon!</string>
 </resources>

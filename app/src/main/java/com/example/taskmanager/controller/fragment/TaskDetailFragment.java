@@ -20,7 +20,6 @@ import androidx.fragment.app.Fragment;
 import com.example.taskmanager.R;
 import com.example.taskmanager.repository.IRepository;
 import com.example.taskmanager.repository.TaskDBRepository;
-import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.model.Task;
 
@@ -57,7 +56,7 @@ public class TaskDetailFragment extends DialogFragment {
     public TaskDetailFragment() {
         // Required empty public constructor
     }
-    public static TaskDetailFragment newInstance() {
+    public static TaskDetailFragment newInstance(Long id) {
         TaskDetailFragment fragment = new TaskDetailFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);

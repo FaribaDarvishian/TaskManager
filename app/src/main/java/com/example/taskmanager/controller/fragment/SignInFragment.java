@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.taskmanager.R;
+import com.example.taskmanager.repository.UserDBRoomRepository;
 import com.example.taskmanager.repository.UserRepository;
 import com.example.taskmanager.model.UserType;
 import com.example.taskmanager.model.User;
@@ -30,6 +31,7 @@ public class SignInFragment extends Fragment {
     private EditText mEditTextPassword;
     private Callbacks mCallBacks;
     private UserRepository mUserRepository;
+    private UserDBRoomRepository mUserDBRoomRepository;
 
     public SignInFragment() {
         // Required empty public constructor
@@ -84,15 +86,18 @@ public class SignInFragment extends Fragment {
                 if (username.equals("") | password.equals("")) {
                     Toast.makeText(getActivity(), "please Enter Username and Password.", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (mUserRepository.checkUserExist(username, password))
+                    if (UserDBRoomRepository.checkUserExist(mUserDBRoomRepository, username) != null)
                         Toast.makeText(getActivity(), "This username and password already exist!", Toast.LENGTH_SHORT).show();
                     else {
                         User user = new User(username, password, UserType.USER);
-                        mUserRepository.addUser(user);
-                        mCallBacks.onBackClicked();
+                        user.setUserType(UserType.USER);
+                        mUserDBRoomRepository.add(user);
+//                        mCallBacks.onBackClicked();
+                        getActivity().onBackPressed();
                     }
                 }
             }
+
         });
     }
 

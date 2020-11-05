@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?android:listSeparatorTextViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:gravity="right"
+    android:orientation="horizontal">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="80dp"
+        android:layout_height="95dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
+        >
+        <ImageView
+            android:id="@+id/list_row_user_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+
+            tools:ignore="MissingConstraints" />
+
+
+
+        <ImageView
+            android:id="@+id/image_view_edit_user_picture"
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="#94FBF7F7"
+            android:src="@drawable/ic_add_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/list_row_Task_image"
+
+            app:layout_constraintHorizontal_bias="0.107"
+            app:layout_constraintStart_toStartOf="@+id/list_row_Task_image"
+            app:layout_constraintTop_toTopOf="@+id/list_row_Task_image"
+            app:layout_constraintVertical_bias="1.0"
+            tools:ignore="MissingConstraints" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_marginRight="20dp"
+        android:gravity="right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/list_row_user_name"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+
+            android:textSize="20dp"
+            tools:text="username" />
+
+        <TextView
+            android:id="@+id/text_view_user_date_created"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="4dp"
+            android:hint="user date created"
+            android:textSize="14dp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginRight="5dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/image_view_delete_user"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_delete_task" />
+
+        <ImageView
+            android:id="@+id/image_view_user_role"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
+
+
+</LinearLayout>

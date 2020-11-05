@@ -29,47 +29,71 @@ import com.example.taskmanager.controller.fragment.TaskDetailFragment;
 import com.example.taskmanager.controller.fragment.TaskListFragment;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.repository.TaskDBRepository;
+import com.example.taskmanager.repository.TaskDBRoomRepository;
 import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.repository.UserDBRepository;
+import com.example.taskmanager.repository.UserDBRoomRepository;
 import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import  com.example.taskmanager.model.UserType;
 
-public class TaskPagerActivity extends AppCompatActivity
-        implements TaskDetailFragment.Callbacks, AddTaskFragment.Callbacks  {
+import java.io.File;
 
-    public static final String EXTRA_BUNDLE_USERNAME = "com.example.taskmanager.activity.extraBundleUsername";
-    private TaskListFragment mTasksListFragmentDone;
-    private TaskListFragment mTasksListFragmentDoing;
-    private TaskListFragment mTasksListFragmentTodo;
-    private TaskDBRepository mTasksRepository;
-    private UserDBRepository mUserRepository;
-    private String mUsername;
+public abstract class TaskPagerActivity extends AppCompatActivity implements
+        TaskDetailFragment.Callbacks , AddTaskFragment.Callbacks,
+        TaskListFragment.Callbacks {
+
+    public static final String EXTRA_BUNDLE_USER_ID = "com.example.taskmanagerhw13.activity.extraBundleUsername";
+    public static final String TASK_DETAIL_FRAGMENT_DIALOG_TAG = "TaskDetailFragmentDialogTag";
+    public static final int TASK_DETAIL_REQUEST_CODE = 101;
+    public static final String BUNDLE_USER_ID = "bundleUserId";
+    private static final String FILE_PROVIDER_AUTHORITY = "fileProvider";
+    private static final int REQUEST_CODE_IMAGE_CAPTURE = 1;
+    //    private TasksRepository mTasksRepository;
+    private TaskDBRoomRepository mTaskDBRoomRepository;
+
     private ViewPager2 viewPager;
-    private TaskListFragment.TaskAdapter mTaskAdapter;
-
+    private Long mUserId;
+    private com.example.taskmanager.repository.UserDBRoomRepository mUserDBRoomRepository;
+    private TaskListFragment mTasksFragmentDone;
+    private TaskListFragment mTasksFragmentDoing;
+    private TaskListFragment mTasksFragmentTodo;
     String[] titles = {"Done", "Doing", "Todo"};
+
     private FragmentStateAdapter pagerAdapter;
 
-    public static Intent newIntent(Context context, String username) {
+    public static Intent newIntent(Context context, Long userId) {
         Intent intent = new Intent(context, TaskPagerActivity.class);
-        intent.putExtra(EXTRA_BUNDLE_USERNAME, username);
+        intent.putExtra(EXTRA_BUNDLE_USER_ID, userId);
         return intent;
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_pager);
-        mUsername= getIntent().getStringExtra(EXTRA_BUNDLE_USERNAME);
+        if (savedInstanceState != null) {
+            mUserId = savedInstanceState.getLong(BUNDLE_USER_ID);
 
-        mTasksListFragmentDone = TaskListFragment.newInstance(State.DONE, mUsername);
-        mTasksListFragmentDoing = TaskListFragment.newInstance(State.DOING, mUsername);
-        mTasksListFragmentTodo = TaskListFragment.newInstance(State.TODO, mUsername);
-        mUserRepository = UserDBRepository.getInstance();
-       // mTasksRepository = TasksRepository.getInstance();
-        mTasksRepository = TaskDBRepository.getInstance(this);
+        }else {
+            Intent intent = getIntent();
+            mUserId = intent.getLongExtra(EXTRA_BUNDLE_USER_ID,0);
+
+        }
+        mUserDBRoomRepository = UserDBRoomRepository.getInstance(this);
+
+        this.setTitle(mUserDBRoomRepository.get(mUserId).getUserName());
+
+        mTasksFragmentDone = TaskListFragment.newInstance(State.DONE, mUserId);
+        mTasksFragmentDoing = TaskListFragment.newInstance(State.DOING, mUserId);
+        mTasksFragmentTodo = TaskListFragment.newInstance(State.TODO, mUserId);
+
+//        mTasksRepository = TasksRepository.getInstance();
+        mTaskDBRoomRepository = TaskDBRoomRepository.getInstance(this);
         findViews();
+        setListeners();
+
         pagerAdapter = new TaskPagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
 
@@ -78,7 +102,12 @@ public class TaskPagerActivity extends AppCompatActivity
                 (tab, position) -> tab.setText(titles[position])
         ).attach();
 
+    }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(BUNDLE_USER_ID, mUserId);
     }
 
     private void findViews() {
@@ -86,22 +115,62 @@ public class TaskPagerActivity extends AppCompatActivity
 
     }
 
+    private void setListeners() {
+
+    }
+
     @Override
-    public void updateTasksFragment(State taskState, String username) {
-       // mTasksRepository = TasksRepository.getInstance();
-        mTasksRepository = TaskDBRepository.getInstance(this);
-        switch (taskState) {
-            case DONE:
-                mTasksListFragmentDone.updateUI();
-                break;
-            case DOING:
-                mTasksListFragmentDoing.updateUI();
-                break;
-            case TODO:
-                mTasksListFragmentTodo.updateUI();
-                break;
+    public void onBackPressed() {
+        if (viewPager.getCurrentItem() == 0) {
+            super.onBackPressed();
+//            TasksRepository.getInstance().cleanTaskRepository();
+        } else {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
     }
+
+
+
+//    @Override
+//    public void onSaveButtonClicked(State taskState, String username) {
+//        mTaskDBRoomRepository = TaskDBRoomRepository.getInstance(this);
+//        switch (taskState) {
+//            case DONE:
+//                mTasksFragmentDone.updateUI();
+//                break;
+//            case DOING:
+//                mTasksFragmentDoing.updateUI();
+//                break;
+//            case TODO:
+//                mTasksFragmentTodo.updateUI();
+//                break;
+//        }
+////        TasksFragment tasksFragment = (TasksFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+////        tasksFragment.updateUI();
+//
+//
+//    }
+
+//    @Override
+//    public void updateTasksFragment(State taskState, String username) {
+//
+//    }
+//
+//    private File mPhotoFile;
+//    @Override
+//    public void onImageClicked() {
+//    }
+//
+//    @Override
+//    public void updateTasksFragment(State taskState, String username) {
+//
+//    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
 
     private class TaskPagerAdapter extends FragmentStateAdapter {
         public TaskPagerAdapter(FragmentActivity fragmentManager) {
@@ -119,20 +188,23 @@ public class TaskPagerActivity extends AppCompatActivity
         public Fragment createFragment(int position) {
             switch (position) {
                 case 0:
-                    return mTasksListFragmentDone;
+//                    return TasksFragment.newInstance(TaskState.DONE, mUsername);
+                    return mTasksFragmentDone;
                 case 1:
-                    return mTasksListFragmentDoing;
+//                    return TasksFragment.newInstance(TaskState.DOING, mUsername);
+                    return mTasksFragmentDoing;
                 case 2:
-                    return mTasksListFragmentTodo;
+                    return mTasksFragmentTodo;
             }
             return null;
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mUserRepository.getUserType(mUsername) != null) {
-            switch (mUserRepository.getUserType(mUsername)) {
+        if (mUserDBRoomRepository.getUserType(mUserId) != null) {
+            switch (mUserDBRoomRepository.getUserType(mUserId)) {
                 case USER:
                     MenuInflater inflater1 = getMenuInflater();
                     inflater1.inflate(R.menu.menu_user_task_pager, menu);
@@ -150,22 +222,9 @@ public class TaskPagerActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_item_search:
-                MenuItem itemSearch = findViewById(R.id.menu_item_search);
-                SearchView searchView = (SearchView) itemSearch.getActionView();
-                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        mTaskAdapter.getFilter().filter(newText);
-                        return false;
-                    }
-                });
-
+            case R.id.menu_item_setting:
+                Toast.makeText(this, R.string.add_soon, Toast.LENGTH_SHORT).show();
+                return true;
             case R.id.menu_item_clear_tasks:
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -173,15 +232,18 @@ public class TaskPagerActivity extends AppCompatActivity
 
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        switch (mUserRepository.getUserType(mUsername)) {
+//                        mTasksRepository.clearTaskRepository();
+//                        viewPager.setAdapter(pagerAdapter);
+                        switch (mUserDBRoomRepository.getUserType(mUserId)) {
                             case USER:
-                                mTasksRepository.deleteUserTask(mUsername);
+                                mTaskDBRoomRepository.removeAllUserTasks(mUserId);
                                 viewPager.setAdapter(pagerAdapter);
                                 break;
                             case ADMIN:
-                                mTasksRepository.clearTaskRepository();
+                                mTaskDBRoomRepository.removeAllTasks();
                                 viewPager.setAdapter(pagerAdapter);
                                 break;
+
                         }
                     }
                 });
@@ -196,8 +258,18 @@ public class TaskPagerActivity extends AppCompatActivity
             case R.id.menu_item_log_out:
                 this.finish();
                 return true;
+            case R.id.menu_item_users:
+                Intent intent = UsersActivity.newIntent(TaskPagerActivity.this);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

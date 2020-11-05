@@ -41,7 +41,7 @@ public class AddTaskFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static AddTaskFragment newInstance(String username) {
+    public static AddTaskFragment newInstance(long username) {
         AddTaskFragment fragment = new AddTaskFragment();
         Bundle args = new Bundle();
         args.putString(ARG_USERNAME, username);
