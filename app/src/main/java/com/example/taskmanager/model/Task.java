@@ -1,91 +1,149 @@
 package com.example.taskmanager.model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+
+import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-public class Task {
-    private UUID mId;
-    private String mTaskTitle;
-    private State mTaskState;
-    private String mTaskDescription;
-    private Date mTaskDate;
-    private String mUsername;
-    public Task(UUID uuid, String title, String description, Date taskDate, String username, State taskState) {
-        this.mId = uuid;
-        this.mTaskTitle = title;
-        this.mTaskState = taskState;
-        this.mTaskDescription = description;
-        this.mTaskDate = taskDate;
-        this.mUsername = username;
+
+    @Entity(tableName = "taskTable")
+    public class Task implements Serializable {
+
+        @PrimaryKey(autoGenerate = true)
+        private Long id;
+
+        @ColumnInfo(name = "uuid")
+        private UUID mTaskId;
+
+        @ColumnInfo(name = "userId")
+        private Long mUserId;
+
+        @ColumnInfo(name = "title")
+        private String mTaskTitle;
+
+        @ColumnInfo(name = "description")
+        private String mTaskDescription;
+
+        @ColumnInfo(name = "state")
+        private State mTaskState;
+
+        @ColumnInfo(name = "date")
+        private Date mTaskDate;
+
+        public Task() {
+        }
+
+        public Task(User user) {
+            mUserId = user.getId();
+            mTaskId = UUID.randomUUID();
+            mTaskDate = new Date();
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public UUID getTaskId() {
+            return mTaskId;
+        }
+
+        public void setTaskId(UUID taskId) {
+            mTaskId = taskId;
+        }
+
+        public Long getUserId() {
+            return mUserId;
+        }
+
+        public void setUserId(Long userId) {
+            mUserId = userId;
+        }
+
+        public String getTaskTitle() {
+            return mTaskTitle;
+        }
+
+        public void setTaskTitle(String taskTitle) {
+            mTaskTitle = taskTitle;
+        }
+
+        public String getTaskDescription() {
+            return mTaskDescription;
+        }
+
+        public void setTaskDescription(String taskDescription) {
+            mTaskDescription = taskDescription;
+        }
+
+        public State getTaskState() {
+            return mTaskState;
+        }
+
+        public void setTaskState(State taskState) {
+            mTaskState = taskState;
+        }
+
+        public Date getTaskDate() {
+            return mTaskDate;
+        }
+
+        public void setTaskDate(Date date) {
+            mTaskDate = date;
+        }
+
+        public static class UUIDConverter {
+
+            @TypeConverter
+            public String fromUUID(UUID value) {
+                return value.toString();
+            }
+
+            @TypeConverter
+            public UUID fromString(String value) {
+                return UUID.fromString(value);
+            }
+        }
+
+        public static class StateConverter {
+
+            @TypeConverter
+            public String fromState(State value) {
+                return value.toString();
+            }
+
+            @TypeConverter
+            public State formString(String value) {
+                switch (value) {
+                    case "TODO":
+                        return State.TODO;
+                    case "DOING":
+                        return State.DOING;
+                    case "DONE":
+                        return State.DONE;
+                }
+                return null;
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "Task{" +
+                    "id=" + id +
+                    ", mTaskId=" + mTaskId +
+                    ", mUserId=" + mUserId +
+                    ", mTaskTitle='" + mTaskTitle + '\'' +
+                    ", mTaskDescription='" + mTaskDescription + '\'' +
+                    ", mTaskState=" + mTaskState +
+                    ", mTaskDate=" + mTaskDate +
+                    '}';
+
+        }
     }
-
-    public UUID getId() {
-        return mId;
-    }
-
-    public String getUsername() {
-        return mUsername;
-    }
-
-    public void setUser(String mUser) {
-        this.mUsername = mUser;
-    }
-
-
-    public String getTaskDescription() {
-        return mTaskDescription;
-    }
-
-    public void setTaskDescription(String mTaskDescription) {
-        this.mTaskDescription = mTaskDescription;
-    }
-
-    public Date getTaskDate() {
-        return mTaskDate;
-    }
-
-    public void setTaskDate(Date mTaskDate) {
-        this.mTaskDate = mTaskDate;
-    }
-
-    public String getTaskTitle() {
-        return mTaskTitle;
-    }
-
-    public void setTaskTitle(String taskName) {
-        mTaskTitle = taskName;
-    }
-
-    public State getTaskState() {
-        return mTaskState;
-    }
-
-    public void setTaskState(State taskState) {
-        mTaskState = taskState;
-    }
-
-    public Task(String mTaskTitle, State mTaskState, String mTaskDescription, Date mTaskDate, String mUsername) {
-        this.mId = UUID.randomUUID();
-        this.mTaskTitle = mTaskTitle;
-        this.mTaskState = mTaskState;
-        this.mTaskDescription = mTaskDescription;
-        this.mTaskDate = mTaskDate;
-        this.mUsername = mUsername;
-    }
-
-    public Task(UUID id) {
-        mId = id;
-        mTaskDate = new Date();
-
-
-    }
-
-    public Task(String username) {
-        this(UUID.randomUUID());
-        this.mUsername = username;
-    }
-    public Task(){
-        this(UUID.randomUUID());
-
-    }
-}
