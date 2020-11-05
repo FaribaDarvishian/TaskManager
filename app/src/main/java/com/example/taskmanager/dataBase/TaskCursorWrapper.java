@@ -5,6 +5,8 @@ import android.database.CursorWrapper;
 
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.model.Task;
+import com.example.taskmanager.model.User;
+import com.example.taskmanager.model.UserType;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,14 +17,23 @@ public class TaskCursorWrapper extends CursorWrapper {
     }
     public Task getTask(){
 
-        String stringUUID = getString(getColumnIndex(TaskDBSchema.TaskTable.COLS.UUID));
-        String title = getString(getColumnIndex(TaskDBSchema.TaskTable.COLS.TITLE));
-        Date taskDate = new Date(getLong(getColumnIndex(TaskDBSchema.TaskTable.COLS.TaskDate)));
-        String description = getString(getColumnIndex(TaskDBSchema.TaskTable.COLS.DESCRIPTION));
-        String username = getString(getColumnIndex(TaskDBSchema.TaskTable.COLS.USERNAME));
-        State taskState =State.valueOf(getString(getColumnIndex(TaskDBSchema.TaskTable.COLS.STATE)));
+        String stringUUID = getString(getColumnIndex(TaskManagerDBSchema.TaskTable.TASKCOLS.UUID));
+        String title = getString(getColumnIndex(TaskManagerDBSchema.TaskTable.TASKCOLS.TITLE));
+        Date taskDate = new Date(getLong(getColumnIndex(TaskManagerDBSchema.TaskTable.TASKCOLS.TASKDATE)));
+        String description = getString(getColumnIndex(TaskManagerDBSchema.TaskTable.TASKCOLS.DESCRIPTION));
+        String username = getString(getColumnIndex(TaskManagerDBSchema.TaskTable.TASKCOLS.USERNAME));
+        State taskState =State.valueOf(getString(getColumnIndex(TaskManagerDBSchema.TaskTable.TASKCOLS.STATE)));
 
         return new Task(UUID.fromString(stringUUID),title,description,taskDate,username, taskState);
+
+    }
+    public User getUser(){
+
+        String username = getString(getColumnIndex(TaskManagerDBSchema.UserTable.USERCOLS.USERNAME));
+        String password = getString(getColumnIndex(TaskManagerDBSchema.UserTable.USERCOLS.PASSWORD));
+        UserType userType = UserType.valueOf(getString(getColumnIndex(TaskManagerDBSchema.UserTable.USERCOLS.USERTYPE)));
+
+        return new User( username,  password,  userType);
 
     }
 }

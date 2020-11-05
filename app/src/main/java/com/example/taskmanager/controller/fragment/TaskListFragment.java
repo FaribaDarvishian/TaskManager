@@ -182,7 +182,8 @@ public class TaskListFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance(mTask.getId());
+                    //TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance(mTask.getId());
+                    TaskDetailFragment taskDetailFragment = TaskDetailFragment.newInstance();
                     taskDetailFragment.setTargetFragment(TaskListFragment.this, TASK_DETAIL_REQUEST_CODE);
                     taskDetailFragment.show(getFragmentManager(), TASK_DETAIL_FRAGMENT_DIALOG_TAG);
 
@@ -271,7 +272,7 @@ public class TaskListFragment extends Fragment {
             return taskHolder;
         }
 
-//        @Override
+     // @Override
         public Filter getFilter() {
             return filter;
         }
@@ -288,11 +289,16 @@ public class TaskListFragment extends Fragment {
                         if (task.getTaskTitle().contains(constraint.toString().toLowerCase()) ||
                                 task.getTaskDescription().contains(constraint.toString().toLowerCase()))
                             mTasksFilter.add(task);
-                    }
+                    }n,
                 }
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = mTasksFilter;
                 return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
             }
 
 

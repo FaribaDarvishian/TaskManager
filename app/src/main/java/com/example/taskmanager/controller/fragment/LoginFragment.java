@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.taskmanager.R;
 import com.example.taskmanager.controller.activity.TaskPagerActivity;
+import com.example.taskmanager.repository.UserDBRepository;
 import com.example.taskmanager.repository.UserRepository;
 
 /**
@@ -29,7 +30,7 @@ public class LoginFragment extends Fragment {
     private Button mButtonLogIn;
     private Button mButtonSignIn;
     private Callbacks mCallbacks;
-    private UserRepository mUserRepository;
+    private UserDBRepository mUserRepository;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -45,7 +46,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserRepository = UserRepository.getInstance();
+        mUserRepository = UserDBRepository.getInstance();
     }
 
     @Override

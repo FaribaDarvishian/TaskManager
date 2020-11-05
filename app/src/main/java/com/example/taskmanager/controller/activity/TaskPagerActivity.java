@@ -1,6 +1,7 @@
 package com.example.taskmanager.controller.activity;
 
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +30,7 @@ import com.example.taskmanager.controller.fragment.TaskListFragment;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.repository.TaskDBRepository;
 import com.example.taskmanager.repository.TasksRepository;
+import com.example.taskmanager.repository.UserDBRepository;
 import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -39,7 +43,7 @@ public class TaskPagerActivity extends AppCompatActivity
     private TaskListFragment mTasksListFragmentDoing;
     private TaskListFragment mTasksListFragmentTodo;
     private TaskDBRepository mTasksRepository;
-    private UserRepository mUserRepository;
+    private UserDBRepository mUserRepository;
     private String mUsername;
     private ViewPager2 viewPager;
     private TaskListFragment.TaskAdapter mTaskAdapter;
@@ -62,7 +66,7 @@ public class TaskPagerActivity extends AppCompatActivity
         mTasksListFragmentDone = TaskListFragment.newInstance(State.DONE, mUsername);
         mTasksListFragmentDoing = TaskListFragment.newInstance(State.DOING, mUsername);
         mTasksListFragmentTodo = TaskListFragment.newInstance(State.TODO, mUsername);
-        mUserRepository = UserRepository.getInstance();
+        mUserRepository = UserDBRepository.getInstance();
        // mTasksRepository = TasksRepository.getInstance();
         mTasksRepository = TaskDBRepository.getInstance(this);
         findViews();

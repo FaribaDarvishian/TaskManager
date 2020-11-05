@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.taskmanager.dataBase.TaskCursorWrapper;
-import com.example.taskmanager.dataBase.TaskDBHelper;
-import com.example.taskmanager.dataBase.TaskDBSchema;
+import com.example.taskmanager.dataBase.TaskManagerDBHelper;
+import com.example.taskmanager.dataBase.TaskManagerDBSchema;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.model.Task;
 
@@ -29,7 +29,7 @@ public class TaskDBRepository implements IRepository<Task> {
     }
 
     private TaskDBRepository() {
-        TaskDBHelper taskDBHelper = new TaskDBHelper(mContext);
+        TaskManagerDBHelper taskDBHelper = new TaskManagerDBHelper(mContext);
         mDatabase = taskDBHelper.getWritableDatabase();
     }
 
@@ -37,7 +37,7 @@ public class TaskDBRepository implements IRepository<Task> {
     public List<Task> getList(State taskState) {
 
         List<Task> tasks = new ArrayList<>();
-        String selection = TaskDBSchema.TaskTable.COLS.STATE + "=?";
+        String selection = TaskManagerDBSchema.TaskTable.TASKCOLS.STATE + "=?";
         String[] selectionArgs = new String[]{taskState.toString()};
         TaskCursorWrapper cursorWrapper = queryTasks(selection, selectionArgs);
         try {
@@ -55,7 +55,7 @@ public class TaskDBRepository implements IRepository<Task> {
     public List<Task> getList(State taskState, String username) {
 
         List<Task> tasks = new ArrayList<>();
-        String selection = TaskDBSchema.TaskTable.COLS.STATE + TaskDBSchema.TaskTable.COLS.USERNAME + "=?";
+        String selection = TaskManagerDBSchema.TaskTable.TASKCOLS.STATE + TaskManagerDBSchema.TaskTable.TASKCOLS.USERNAME + " = ?";
         String[] selectionArgs = new String[]{taskState.toString(), username};
         TaskCursorWrapper cursorWrapper = queryTasks(selection, selectionArgs);
         try {
@@ -89,15 +89,15 @@ public class TaskDBRepository implements IRepository<Task> {
     }
 
     private TaskCursorWrapper queryTasks(String selection, String[] selectionArgs) {
-        Cursor cursor = mDatabase.query(TaskDBSchema.TaskTable.NAME,
-                null, selection, selectionArgs, null, null, null);
+        Cursor cursor = mDatabase.query(TaskManagerDBSchema.TaskTable.NAME,
+               null , selection, selectionArgs, null, null, null);
         TaskCursorWrapper taskCursorWrapper = new TaskCursorWrapper(cursor);
         return taskCursorWrapper;
     }
 
     @Override
     public Task get(UUID uuid) {
-        String selection = TaskDBSchema.TaskTable.COLS.UUID + "=?";
+        String selection = TaskManagerDBSchema.TaskTable.TASKCOLS.UUID + "=?";
         String[] selectionArgs = new String[]{uuid.toString()};
         TaskCursorWrapper taskCursorWrapper = queryTasks(selection, selectionArgs);
         try {
@@ -116,19 +116,19 @@ public class TaskDBRepository implements IRepository<Task> {
     @Override
     public void update(Task task) {
         ContentValues values = getTaskContentValue(task);
-        String where = TaskDBSchema.TaskTable.COLS.UUID + "=?";
+        String where = TaskManagerDBSchema.TaskTable.TASKCOLS.UUID + "=?";
         String[] whereArgs = new String[]{task.getId().toString()};
-        mDatabase.update(TaskDBSchema.TaskTable.NAME, values, where, whereArgs);
+        mDatabase.update(TaskManagerDBSchema.TaskTable.NAME, values, where, whereArgs);
 
     }
 
     private ContentValues getTaskContentValue(Task task) {
         ContentValues values = new ContentValues();
-        values.put(TaskDBSchema.TaskTable.COLS.UUID, task.getId().toString());
-        values.put(TaskDBSchema.TaskTable.COLS.TITLE, task.getTaskTitle());
-        values.put(TaskDBSchema.TaskTable.COLS.DESCRIPTION, task.getTaskDescription());
-        values.put(TaskDBSchema.TaskTable.COLS.USERNAME, task.getTaskDescription());
-        values.put(TaskDBSchema.TaskTable.COLS.TaskDate, task.getTaskDate().getTime());
+        values.put(TaskManagerDBSchema.TaskTable.TASKCOLS.UUID, task.getId().toString());
+        values.put(TaskManagerDBSchema.TaskTable.TASKCOLS.TITLE, task.getTaskTitle());
+        values.put(TaskManagerDBSchema.TaskTable.TASKCOLS.DESCRIPTION, task.getTaskDescription());
+        values.put(TaskManagerDBSchema.TaskTable.TASKCOLS.USERNAME, task.getTaskDescription());
+        values.put(TaskManagerDBSchema.TaskTable.TASKCOLS.TASKDATE, task.getTaskDate().getTime());
 //        if(task.getTaskState().toString()!=null)
 //            values.put(TaskDBSchema.TaskTable.COLS.STATE, task.getTaskState().toString());
         return values;
@@ -136,15 +136,15 @@ public class TaskDBRepository implements IRepository<Task> {
 
     @Override
     public void delete(Task task) {
-        String where = TaskDBSchema.TaskTable.COLS.UUID + "=?";
+        String where = TaskManagerDBSchema.TaskTable.TASKCOLS.UUID + "=?";
         String[] whereArgs = new String[]{task.getId().toString()};
-        mDatabase.delete(TaskDBSchema.TaskTable.NAME, where, whereArgs);
+        mDatabase.delete(TaskManagerDBSchema.TaskTable.NAME, where, whereArgs);
     }
 
     @Override
     public void insert(Task task) {
         ContentValues values = getTaskContentValue(task);
-        mDatabase.insert(TaskDBSchema.TaskTable.NAME, null, values);
+        mDatabase.insert(TaskManagerDBSchema.TaskTable.NAME, null, values);
     }
 
     @Override
@@ -154,17 +154,17 @@ public class TaskDBRepository implements IRepository<Task> {
 
     @Override
     public void deleteUserTask(String username) {
-        String where = TaskDBSchema.TaskTable.COLS.USERNAME + "=?";
+        String where = TaskManagerDBSchema.TaskTable.TASKCOLS.USERNAME + "=?";
         String[] whereArgs = new String[]{username};
-        mDatabase.delete(TaskDBSchema.TaskTable.NAME, where, whereArgs);
+        mDatabase.delete(TaskManagerDBSchema.TaskTable.NAME, where, whereArgs);
     }
 
     @Override
     public void delete(UUID taskId) {
 
-        String where = TaskDBSchema.TaskTable.COLS.UUID + "=?";
+        String where = TaskManagerDBSchema.TaskTable.TASKCOLS.UUID + "=?";
         String[] whereArgs = new String[]{taskId.toString()};
-        mDatabase.delete(TaskDBSchema.TaskTable.NAME, where, whereArgs);
+        mDatabase.delete(TaskManagerDBSchema.TaskTable.NAME, where, whereArgs);
     }
 
     @Override
@@ -191,18 +191,18 @@ public class TaskDBRepository implements IRepository<Task> {
         task.setUser("Todo");
         task.setTaskState(taskState);
         ContentValues values = getTaskContentValue(task);
-        mDatabase.insert(TaskDBSchema.TaskTable.NAME, null, values);
+        mDatabase.insert(TaskManagerDBSchema.TaskTable.NAME, null, values);
 
     }
     @Override
     public boolean checkTaskExists(Task task) {
 
-        return CheckIsDataAlreadyInDBorNot(TaskDBSchema.NAME, TaskDBSchema.TaskTable.COLS.USERNAME, task.getUsername());
+        return CheckIsDataAlreadyInDBorNot(TaskManagerDBSchema.NAME, TaskManagerDBSchema.TaskTable.TASKCOLS.USERNAME, task.getUsername());
     }
 
     public boolean CheckIsDataAlreadyInDBorNot(String TableName,
                                                String dbfield, String fieldValue) {
-        TaskDBHelper taskBaseHelper = new TaskDBHelper(mContext);
+        TaskManagerDBHelper taskBaseHelper = new TaskManagerDBHelper(mContext);
         SQLiteDatabase sqldb = taskBaseHelper.getWritableDatabase();
         String Query = "Select * from " + TableName + " where " + dbfield + " = " + fieldValue;
         Cursor cursor = sqldb.rawQuery(Query, null);
