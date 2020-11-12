@@ -20,12 +20,12 @@ public class UserRepository {
 
     private UserRepository() {
 
-        mUsers = new ArrayList<>();
-        mUsers.add(new User("a", "1", UserType.ADMIN));
-        for (int i = 1; i < mNumberOfUsers; i++) {
-            User user = new User();
-            mUsers.add(user);
-        }
+//        mUsers = new ArrayList<>();
+//        mUsers.add(new User("a", "1", UserType.ADMIN));
+//        for (int i = 1; i < mNumberOfUsers; i++) {
+//            User user = new User();
+//            mUsers.add(user);
+//        }
     }
 
     public void addUser(User user) {
@@ -34,7 +34,7 @@ public class UserRepository {
 
     public boolean checkUserExist(String username, String password) {
         for (User user : mUsers) {
-            if (user.getUsername().equals(username) && user.getPassword().equals(password))
+            if (user.getUserName().equals(username) && user.getPassword().equals(password))
                 return true;
         }
         return false;
@@ -42,7 +42,7 @@ public class UserRepository {
 
     public UserType getUserType(String username){
         for (User user : mUsers) {
-            if (user.getUsername().equals(username))
+            if (user.getUserName().equals(username))
                 return user.getUserType();
         }
         return null;
@@ -58,7 +58,7 @@ public class UserRepository {
 
     public void deleteUser(User deleteUser){
         for (User user : mUsers) {
-                if(user.getUsername().equals(deleteUser.getUsername()))
+                if(user.getUserName().equals(deleteUser.getUserName()))
                     mUsers.remove(user);
         }
     }

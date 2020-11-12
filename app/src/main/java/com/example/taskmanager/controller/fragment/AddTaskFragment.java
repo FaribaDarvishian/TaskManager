@@ -1,6 +1,8 @@
 package com.example.taskmanager.controller.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,16 +13,23 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import com.example.taskmanager.R;
-import com.example.taskmanager.repository.TasksRepository;
+import com.example.taskmanager.model.User;
+import com.example.taskmanager.repository.TaskDBRoomRepository;
+//import com.example.taskmanager.repository.TasksRepository;
 import com.example.taskmanager.model.State;
 import com.example.taskmanager.model.Task;
+import com.example.taskmanager.repository.UserDBRoomRepository;
+
+import java.util.Date;
 
 public class AddTaskFragment extends DialogFragment {
 
-    public static final String ARG_USERNAME = "argUsername";
+    public static final String ARG_USER_ID = "argUsername";
     public static final String DIALOG_FRAGMENT_TAG = "Dialog";
     public static final int REQUEST_CODE_DATE_PICKER = 0;
     public static final String BUNDLE_TASK_USERNAME = "bundleTaskUsername";
@@ -34,17 +43,18 @@ public class AddTaskFragment extends DialogFragment {
     private Button mButtonDiscard;
     private Task mTask;
     private Callbacks mCallbacks;
-    private TasksRepository mTasksRepository;
-    private String mUsername;
+    private Long mUserId;
+    private TaskDBRoomRepository mTaskDBRoomRepository;
+    private UserDBRoomRepository mUserDBRoomRepository;
 
     public AddTaskFragment() {
         // Required empty public constructor
     }
 
-    public static AddTaskFragment newInstance(long username) {
+    public static AddTaskFragment newInstance(Long userId) {
         AddTaskFragment fragment = new AddTaskFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_USERNAME, username);
+        args.putLong(ARG_USER_ID, userId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,10 +63,14 @@ public class AddTaskFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mUsername = getArguments().getString(ARG_USERNAME);
+            mUserId = getArguments().getLong(ARG_USER_ID);
         }
-        mTask = new Task(mUsername);
-        mTasksRepository = TasksRepository.getInstance();
+        mUserDBRoomRepository = UserDBRoomRepository.getInstance(getContext());
+        User user = mUserDBRoomRepository.get(mUserId);
+        mTask = new Task(user);
+        mTaskDBRoomRepository = TaskDBRoomRepository.getInstance(getActivity());
+
+
     }
 
     @Override
@@ -69,6 +83,7 @@ public class AddTaskFragment extends DialogFragment {
         setListeners();
         return view;
     }
+
     private void findViews(View view) {
         mEditTextTaskTitle = view.findViewById(R.id.edit_text_task_title);
         mEditTextDescription = view.findViewById(R.id.edit_text_task_description);
@@ -79,22 +94,7 @@ public class AddTaskFragment extends DialogFragment {
         mRadioButtonDoing = view.findViewById(R.id.radio_button_doing);
         mRadioButtonTodo = view.findViewById(R.id.radio_button_todo);
     }
-    private void setTaskState(State taskState) {
-        if (taskState != null) {
-            switch (taskState) {
-                case DONE:
-                    mRadioButtonDone.setChecked(true);
-                    break;
-                case DOING:
-                    mRadioButtonDoing.setChecked(true);
-                    break;
-                case TODO:
-                    mRadioButtonTodo.setChecked(true);
-                    break;
 
-            }
-        }
-    }
     private void setListeners() {
         mButtonDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,12 +112,13 @@ public class AddTaskFragment extends DialogFragment {
                 else {
                     mTask.setTaskTitle(mEditTextTaskTitle.getText().toString());
                     mTask.setTaskDescription((mEditTextDescription.getText().toString()));
-                        mTask.setUser(mUsername);
-                        mTasksRepository.addTask(mTask);
-                        mCallbacks.updateTasksFragment(mTask.getTaskState(), mTask.getUsername());
-                        getDialog().cancel();
-//                    TasksFragment tasksFragment = (TasksFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-//                    tasksFragment.updateUI();
+                    mTask.setUserId(mUserId);
+                    mTaskDBRoomRepository.insert(mTask);
+
+                    mCallbacks.updateTasksFragment(mTask.getTaskState(), mTask.getUserId().toString());
+
+                    getDialog().cancel();
+                    setResult();
 
                 }
             }
@@ -150,10 +151,11 @@ public class AddTaskFragment extends DialogFragment {
         });
 
     }
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(BUNDLE_TASK_USERNAME, mUsername);
+        outState.putSerializable(BUNDLE_TASK_USERNAME, mUserId);
     }
 
     @Override
@@ -173,13 +175,29 @@ public class AddTaskFragment extends DialogFragment {
         mCallbacks = null;
     }
 
-    private void updateTask() {
-        mTasksRepository.update(mTask);
-//        mCallbacks.onTaskUpdated();
-
-    }
 
     public interface Callbacks {
         void updateTasksFragment(State taskState, String username);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != Activity.RESULT_OK || data == null)
+            return;
+
+        if (requestCode == REQUEST_CODE_DATE_PICKER) {
+            Date userSelectedDate = (Date) data.getSerializableExtra(DatePickerFragment.EXTRA_USER_SELECTED_DATE);
+
+            mTask.setTaskDate(userSelectedDate);
+            mButtonDate.setText(mTask.getTaskDate().toString());
+
+        }
+    }
+
+    private void setResult() {
+        Fragment fragment = getTargetFragment();
+        Intent intent = new Intent();
+        fragment.onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
     }
 }

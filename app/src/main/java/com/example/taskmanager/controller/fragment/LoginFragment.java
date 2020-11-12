@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.taskmanager.R;
 import com.example.taskmanager.controller.activity.TaskPagerActivity;
-import com.example.taskmanager.repository.UserDBRepository;
+//import com.example.taskmanager.repository.UserDBRepository;
 import com.example.taskmanager.repository.UserDBRoomRepository;
 import com.example.taskmanager.repository.UserRepository;
 
@@ -24,9 +25,8 @@ public class LoginFragment extends Fragment {
     private EditText mEditTextUsername;
     private EditText mEditTextPassword;
     private Button mButtonLogIn;
-    private Button mButtonSignIn;
+    private TextView mTextViewSignIn;
     private Callbacks mCallbacks;
-    private UserDBRepository mUserRepository;
     private UserDBRoomRepository mUserDBRoomRepository;
 
     public LoginFragment() {
@@ -43,7 +43,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserRepository = UserDBRepository.getInstance();
+
+        mUserDBRoomRepository = UserDBRoomRepository.getInstance(getActivity());
     }
 
     @Override
@@ -63,11 +64,11 @@ public class LoginFragment extends Fragment {
         mEditTextUsername = view.findViewById(R.id.log_in_edit_text_username);
         mEditTextPassword = view.findViewById(R.id.log_in_edit_text_password);
         mButtonLogIn = view.findViewById(R.id.button_login);
-        mButtonSignIn = view.findViewById(R.id.button_sign_in);
+        mTextViewSignIn = view.findViewById(R.id.button_sign_in);
     }
 
     private void setListeners() {
-        mButtonSignIn.setOnClickListener((new View.OnClickListener() {
+        mTextViewSignIn.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mCallbacks.onSinInClicked();

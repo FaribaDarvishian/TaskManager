@@ -34,7 +34,7 @@ import java.util.List;
 
 
 public class UserListFragment extends Fragment {
-    private static final String FILE_PROVIDER_AUTHORITY = "com.example.taskmanagerhw14t.fileProvider";
+    private static final String FILE_PROVIDER_AUTHORITY = "com.example.taskmanager.fileProvider";
     private static final int REQUEST_CODE_IMAGE_CAPTURE = 1;
     public static final int REQUEST_CODE_IMAGE_VIEW_PICTURE = 3;
     public static final String DIALOG_TAG_IMAGE_VIEW_FRAGMENT = "dialogTagImageViewFragment";
