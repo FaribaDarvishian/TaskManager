@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#FFFFFF"
     android:label="sign up"
     android:paddingLeft="16dp"
     android:paddingTop="16dp"
@@ -45,36 +44,60 @@
 
     <Button
         android:id="@+id/button_Sign_up"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
         android:layout_marginBottom="64dp"
-        android:background="#D7B5E8"
+        android:background="#4DD352"
         android:enabled="true"
         android:text="sign_up"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.669"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sign_in_edit_text_password"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.251" />
 
-
-    <Button
-        android:id="@+id/button_back"
+    <ProgressBar
+        android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="64dp"
-        android:background="#D7B5E8"
-        android:text="Back"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_Sign_up"
-        app:layout_constraintHorizontal_bias="0.845"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_in_edit_text_password"
-        app:layout_constraintVertical_bias="0.762" />
+        app:layout_constraintEnd_toEndOf="@+id/edit_text_password"
+        app:layout_constraintStart_toStartOf="@+id/sign_in_edit_text_password"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
 
+    <!--    <RadioGroup-->
+<!--        android:layout_width="69dp"-->
+<!--        android:layout_height="76dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/sign_in_edit_text_password"-->
+<!--        app:layout_constraintVertical_bias="0.062" >-->
+
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/radioButton-user"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="RadioButton" />-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/radioButton2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="RadioButton" />-->
+<!--    </RadioGroup>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

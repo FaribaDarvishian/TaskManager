@@ -13,7 +13,7 @@ import com.example.taskmanager.controller.fragment.UserListFragment;
 public class UsersActivity extends AppCompatActivity {
 
     public static Intent newIntent(Context context) {
-        Intent intent = new Intent(context, com.example.taskmanager.controller.activity.UsersActivity.class);
+        Intent intent = new Intent(context, UsersActivity.class);
         return intent;
     }
     @Override

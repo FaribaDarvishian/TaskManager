@@ -15,22 +15,17 @@ import androidx.fragment.app.Fragment;
 
 import com.example.taskmanager.R;
 import com.example.taskmanager.repository.UserDBRoomRepository;
-import com.example.taskmanager.repository.UserRepository;
+//import com.example.taskmanager.repository.UserRepository;
 import com.example.taskmanager.model.UserType;
 import com.example.taskmanager.model.User;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SignInFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SignInFragment extends Fragment {
     private Button mButtonSignUp;
     private Button mButtonBack;
     private EditText mEditTextUsername;
     private EditText mEditTextPassword;
     private Callbacks mCallBacks;
-    private UserRepository mUserRepository;
     private UserDBRoomRepository mUserDBRoomRepository;
 
     public SignInFragment() {
@@ -50,7 +45,7 @@ public class SignInFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 //        setHasOptionsMenu(false);
-        mUserRepository = UserRepository.getInstance();
+        mUserDBRoomRepository = UserDBRoomRepository.getInstance(getActivity());
     }
 
     @Override
@@ -66,7 +61,7 @@ public class SignInFragment extends Fragment {
 
     private void findAllView(View view) {
         mButtonSignUp = view.findViewById(R.id.button_Sign_up);
-        mButtonBack = view.findViewById(R.id.button_back);
+        //mButtonBack = view.findViewById(R.id.button_back);
         mEditTextPassword = view.findViewById(R.id.sign_in_edit_text_password);
         mEditTextUsername = view.findViewById(R.id.sign_in_edit_text_username);
     }
@@ -86,15 +81,15 @@ public class SignInFragment extends Fragment {
                 if (username.equals("") | password.equals("")) {
                     Toast.makeText(getActivity(), "please Enter Username and Password.", Toast.LENGTH_SHORT).show();
                 } else {
-//                    if (UserDBRoomRepository.checkUserExist(mUserDBRoomRepository, username) != null)
-//                        Toast.makeText(getActivity(), "This username and password already exist!", Toast.LENGTH_SHORT).show();
-//                    else {
+                    if (UserDBRoomRepository.checkUserExist(mUserDBRoomRepository, username) != null)
+                        Toast.makeText(getActivity(), "This username and password already exist!", Toast.LENGTH_SHORT).show();
+                    else {
                         User user = new User(username, password, UserType.USER);
                         user.setUserType(UserType.USER);
                         mUserDBRoomRepository.add(user);
-//                        mCallBacks.onBackClicked();
+                        mCallBacks.onBackClicked();
                         getActivity().onBackPressed();
-                    //}
+                    }
                 }
             }
 

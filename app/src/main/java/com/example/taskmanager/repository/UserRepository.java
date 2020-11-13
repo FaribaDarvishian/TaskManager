@@ -1,65 +1,65 @@
-package com.example.taskmanager.repository;
-
-import com.example.taskmanager.model.UserType;
-import com.example.taskmanager.model.User;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class UserRepository {
-
-    private static UserRepository sUserRepository;
-    private List<User> mUsers;
-    public static int mNumberOfUsers;
-
-    public static UserRepository getInstance() {
-        if (sUserRepository == null)
-            sUserRepository = new UserRepository();
-        return sUserRepository;
-    }
-
-    private UserRepository() {
-
-//        mUsers = new ArrayList<>();
-//        mUsers.add(new User("a", "1", UserType.ADMIN));
-//        for (int i = 1; i < mNumberOfUsers; i++) {
-//            User user = new User();
-//            mUsers.add(user);
+//package com.example.taskmanager.repository;
+//
+//import com.example.taskmanager.model.UserType;
+//import com.example.taskmanager.model.User;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//public class UserRepository {
+//
+//    private static UserRepository sUserRepository;
+//    private List<User> mUsers;
+//    public static int mNumberOfUsers;
+//
+//    public static UserRepository getInstance() {
+//        if (sUserRepository == null)
+//            sUserRepository = new UserRepository();
+//        return sUserRepository;
+//    }
+//
+//    private UserRepository() {
+//
+////        mUsers = new ArrayList<>();
+////        mUsers.add(new User("a", "1", UserType.ADMIN));
+////        for (int i = 1; i < mNumberOfUsers; i++) {
+////            User user = new User();
+////            mUsers.add(user);
+////        }
+//    }
+//
+//    public void addUser(User user) {
+//        mUsers.add(user);
+//    }
+//
+//    public boolean checkUserExist(String username, String password) {
+//        for (User user : mUsers) {
+//            if (user.getUserName().equals(username) && user.getPassword().equals(password))
+//                return true;
 //        }
-    }
-
-    public void addUser(User user) {
-        mUsers.add(user);
-    }
-
-    public boolean checkUserExist(String username, String password) {
-        for (User user : mUsers) {
-            if (user.getUserName().equals(username) && user.getPassword().equals(password))
-                return true;
-        }
-        return false;
-    }
-
-    public UserType getUserType(String username){
-        for (User user : mUsers) {
-            if (user.getUserName().equals(username))
-                return user.getUserType();
-        }
-        return null;
-    }
-    public List<User> getList() {
-        List<User> userList = new ArrayList<>();
-        for (User user : mUsers) {
-
-                userList.add(user);
-        }
-        return userList;
-    }
-
-    public void deleteUser(User deleteUser){
-        for (User user : mUsers) {
-                if(user.getUserName().equals(deleteUser.getUserName()))
-                    mUsers.remove(user);
-        }
-    }
-}
+//        return false;
+//    }
+//
+//    public UserType getUserType(String username){
+//        for (User user : mUsers) {
+//            if (user.getUserName().equals(username))
+//                return user.getUserType();
+//        }
+//        return null;
+//    }
+//    public List<User> getList() {
+//        List<User> userList = new ArrayList<>();
+//        for (User user : mUsers) {
+//
+//                userList.add(user);
+//        }
+//        return userList;
+//    }
+//
+//    public void deleteUser(User deleteUser){
+//        for (User user : mUsers) {
+//                if(user.getUserName().equals(deleteUser.getUserName()))
+//                    mUsers.remove(user);
+//        }
+//    }
+//}

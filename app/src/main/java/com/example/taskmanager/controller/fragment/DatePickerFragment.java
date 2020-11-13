@@ -21,11 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DatePickerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class DatePickerFragment extends DialogFragment {
 
     public static final String ARG_DATE = "currentDate";

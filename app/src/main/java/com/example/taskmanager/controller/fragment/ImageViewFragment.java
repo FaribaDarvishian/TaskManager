@@ -29,9 +29,8 @@ public class ImageViewFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static com.example.taskmanager.controller.fragment.ImageViewFragment newInstance(File imageFile) {
-        com.example.taskmanager.controller.fragment.ImageViewFragment fragment = new com.example.taskmanager.
-                controller.fragment.ImageViewFragment();
+    public static ImageViewFragment newInstance(File imageFile) {
+        ImageViewFragment fragment = new ImageViewFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_IMAGE_FILE, imageFile);
         fragment.setArguments(args);

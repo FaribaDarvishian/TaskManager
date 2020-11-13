@@ -15,7 +15,7 @@ import java.util.List;
 public class UserDBRoomRepository {
 
 
-    public static com.example.taskmanager.repository.UserDBRoomRepository sUserRepository;
+    public static UserDBRoomRepository sUserRepository;
     private TaskManagerDB mDatabase;
     private static Context sContext;
 
@@ -29,7 +29,7 @@ public class UserDBRoomRepository {
     public static com.example.taskmanager.repository.UserDBRoomRepository getInstance(Context context) {
         sContext = context.getApplicationContext();
         if (sUserRepository == null) {
-            sUserRepository = new com.example.taskmanager.repository.UserDBRoomRepository();
+            sUserRepository = new UserDBRoomRepository();
             if (sUserRepository.getList().size() == 0) {
                 User admin = new User("admin", "1", UserType.ADMIN);
                 sUserRepository.add(admin);

@@ -27,11 +27,7 @@ import com.example.taskmanager.repository.TaskDBRoomRepository;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TaskDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TaskDetailFragment extends DialogFragment {
 
 

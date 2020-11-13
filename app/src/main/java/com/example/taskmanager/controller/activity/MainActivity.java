@@ -45,15 +45,31 @@ private FragmentManager mFragmentManager;
     }
     @Override
     public void onBackPressed() {
-        if (mFragmentManager.getBackStackEntryCount() > 0)
-            mFragmentManager.popBackStackImmediate();
-        else super.onBackPressed();
+//        if (mFragmentManager.getBackStackEntryCount() > 0)
+//            mFragmentManager.popBackStackImmediate();
+//        else
+            super.onBackPressed();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //MenuInflater inflater = getMenuInflater();
         MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_login, menu);
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_item_setting:
+                Toast.makeText(this, "this Feature will be add soon!", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
@@ -67,17 +83,16 @@ private FragmentManager mFragmentManager;
     @Override
     public void onSinInClicked() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.fragment_container, new SignInFragment())
+                    .replace(R.id.fragment_container, SignInFragment.newInstance())
+                    .addToBackStack("SignInFragment")
                     .commit();
 
     }
     @Override
     public void onBackClicked() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        Fragment fragment = fragmentManager.findFragmentById(R.id.fragment_container);
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.fragment_container, new LoginFragment())

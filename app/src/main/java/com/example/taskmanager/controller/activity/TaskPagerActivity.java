@@ -33,7 +33,7 @@ import com.example.taskmanager.repository.TaskDBRoomRepository;
 //import com.example.taskmanager.repository.TasksRepository;
 //import com.example.taskmanager.repository.UserDBRepository;
 import com.example.taskmanager.repository.UserDBRoomRepository;
-import com.example.taskmanager.repository.UserRepository;
+//import com.example.taskmanager.repository.UserRepository;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import  com.example.taskmanager.model.UserType;
@@ -55,7 +55,7 @@ public abstract class TaskPagerActivity extends AppCompatActivity implements
 
     private ViewPager2 viewPager;
     private Long mUserId;
-    private com.example.taskmanager.repository.UserDBRoomRepository mUserDBRoomRepository;
+    private UserDBRoomRepository mUserDBRoomRepository;
     private TaskListFragment mTasksFragmentDone;
     private TaskListFragment mTasksFragmentDoing;
     private TaskListFragment mTasksFragmentTodo;
@@ -131,40 +131,36 @@ public abstract class TaskPagerActivity extends AppCompatActivity implements
 
 
 
-//    @Override
-//    public void onSaveButtonClicked(State taskState, String username) {
-//        mTaskDBRoomRepository = TaskDBRoomRepository.getInstance(this);
-//        switch (taskState) {
-//            case DONE:
-//                mTasksFragmentDone.updateUI();
-//                break;
-//            case DOING:
-//                mTasksFragmentDoing.updateUI();
-//                break;
-//            case TODO:
-//                mTasksFragmentTodo.updateUI();
-//                break;
-//        }
-////        TasksFragment tasksFragment = (TasksFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-////        tasksFragment.updateUI();
-//
-//
-//    }
+    @Override
+    public void onSaveButtonClicked(State taskState, String username) {
+        mTaskDBRoomRepository = TaskDBRoomRepository.getInstance(this);
+        switch (taskState) {
+            case DONE:
+                mTasksFragmentDone.updateUI();
+                break;
+            case DOING:
+                mTasksFragmentDoing.updateUI();
+                break;
+            case TODO:
+                mTasksFragmentTodo.updateUI();
+                break;
+        }
+//        TasksFragment tasksFragment = (TasksFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+//        tasksFragment.updateUI();
 
-//    @Override
-//    public void updateTasksFragment(State taskState, String username) {
-//
-//    }
-//
-//    private File mPhotoFile;
-//    @Override
-//    public void onImageClicked() {
-//    }
-//
-//    @Override
-//    public void updateTasksFragment(State taskState, String username) {
-//
-//    }
+
+    }
+
+
+    private File mPhotoFile;
+    @Override
+    public void onImageClicked() {
+    }
+
+    @Override
+    public void updateTasksFragment(State taskState, String username) {
+
+    }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {

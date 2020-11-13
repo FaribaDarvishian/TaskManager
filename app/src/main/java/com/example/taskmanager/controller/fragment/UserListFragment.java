@@ -48,8 +48,8 @@ public class UserListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static com.example.taskmanager.controller.fragment.UserListFragment newInstance() {
-        com.example.taskmanager.controller.fragment.UserListFragment fragment = new com.example.
+    public static UserListFragment newInstance() {
+        UserListFragment fragment = new com.example.
                 taskmanager.controller.fragment.UserListFragment();
         Bundle args = new Bundle();
 
@@ -175,7 +175,7 @@ public class UserListFragment extends Fragment {
         private void updatePhotoView() {
             mPhotoFile = mUserDBRoomRepository.getPhotoFile(getActivity(), mUser);
             if (mPhotoFile == null || !mPhotoFile.exists()) {
-         //       mImageViewUserProfilePhoto.setImageDrawable(getResources().getDrawable(R.drawable.ic_person));
+               mImageViewUserProfilePhoto.setImageDrawable(getResources().getDrawable(R.drawable.ic_person));
 
             } else {
                 Bitmap bitmap = PictureUtils.getScaledBitmap(mPhotoFile.getPath(), getActivity());
