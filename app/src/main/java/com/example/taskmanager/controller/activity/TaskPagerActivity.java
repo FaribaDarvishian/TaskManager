@@ -40,7 +40,7 @@ import  com.example.taskmanager.model.UserType;
 
 import java.io.File;
 
-public abstract class TaskPagerActivity extends AppCompatActivity implements
+public  class TaskPagerActivity extends AppCompatActivity implements
         TaskDetailFragment.Callbacks , AddTaskFragment.Callbacks,
         TaskListFragment.Callbacks {
 

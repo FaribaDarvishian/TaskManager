@@ -67,12 +67,12 @@ public class SignInFragment extends Fragment {
     }
 
     private void setListeners() {
-        mButtonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallBacks.onBackClicked();
-            }
-        });
+//        mButtonBack.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mCallBacks.onBackClicked();
+//            }
+//        });
         mButtonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
